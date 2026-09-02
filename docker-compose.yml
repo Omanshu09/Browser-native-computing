@@ -1,0 +1,15 @@
+services:
+  api:
+    build: ./apps/api
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgresql://orbit:orbit@db:5432/orbit
+      CORS_ORIGIN: http://localhost:5173
+    ports: ["8080:8080"]
+    depends_on: [db]
+  db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_USER: orbit, POSTGRES_PASSWORD: orbit, POSTGRES_DB: orbit }
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+volumes: { pgdata: {} }
